@@ -1,0 +1,110 @@
+ -- first, I look over my dataset 
+SELECT * 
+FROM dbo.production_based_co2_emissions$
+
+-- then, I check if there are any columns that have null values. 
+
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (1990)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (1995)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2000)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2005)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2010)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2013)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2018)] is Null
+
+--i decide to change all null values to zero
+
+UPDATE DBO.production_based_co2_emissions$
+SET [Metric tons of CO2e per capita (1990)]=0
+WHERE [Metric tons of CO2e per capita (1990)] IS NULL
+UPDATE DBO.production_based_co2_emissions$
+SET [Metric tons of CO2e per capita (1995)]=0
+WHERE [Metric tons of CO2e per capita (1995)] IS NULL
+UPDATE DBO.production_based_co2_emissions$
+SET [Metric tons of CO2e per capita (2000)]=0
+WHERE [Metric tons of CO2e per capita (2000)] IS NULL
+UPDATE DBO.production_based_co2_emissions$
+SET [Metric tons of CO2e per capita (2005)]=0
+WHERE [Metric tons of CO2e per capita (2005)] IS NULL
+UPDATE DBO.production_based_co2_emissions$
+SET [Metric tons of CO2e per capita (2010)]=0
+WHERE [Metric tons of CO2e per capita (2010)] IS NULL
+UPDATE DBO.production_based_co2_emissions$
+SET [Metric tons of CO2e per capita (2013)]=0
+WHERE [Metric tons of CO2e per capita (2013)] IS NULL
+UPDATE DBO.production_based_co2_emissions$
+SET [Metric tons of CO2e per capita (2018)]=0
+WHERE [Metric tons of CO2e per capita (2018)] IS NULL
+
+-- then, I check AGAIN if there are any columns that have null values. 
+
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (1990)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (1995)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2000)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2005)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2010)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2013)] is Null
+SELECT*
+FROM dbo.production_based_co2_emissions$
+where [Metric tons of CO2e per capita (2018)] is Null
+
+--NO NULL VALUES SO I CAN NOW PROCEED
+
+--  I move to examine the smaller parts of my dataset
+-- including the range of the column "Metric tons of CO2e per capita (2018)", distinct value of the column "Metric tons of CO2e per capita (2018)", the range of the column "Metric tons of CO2e per capita (2000)" 
+-- with different conditions. 
+
+SELECT DISTINCT [Metric tons of CO2e per capita (2018)]
+FROM DBO.production_based_co2_emissions$
+SELECT MIN( [Metric tons of CO2e per capita (2018)]), MAX ([Metric tons of CO2e per capita (2018)]), AVG ([Metric tons of CO2e per capita (2018)]) as averagePercaitaEmission
+FROM DBO.production_based_co2_emissions$
+SELECT MIN( [Metric tons of CO2e per capita (1990)]), MAX ([Metric tons of CO2e per capita (1990)])
+FROM DBO.production_based_co2_emissions$
+
+
+-- I want to find the data only about america
+select* 
+from dbo.production_based_co2_emissions$
+where Continent = 'America'
+
+--i want to find out the countries with the most emission per capita in 2018 from the american continent
+
+select max([Metric tons of CO2e per capita (2018)]) as smallestEmitter, min([Metric tons of CO2e per capita (2018)]) as LargestEmitter
+from dbo.production_based_co2_emissions$
+where continent = 'america'
+
+--- The min value is 21.14 and the max value is 0.89
+
+--i want to find out argentina's emissions per capita in 2018
+
+SELECT  [Metric tons of CO2e per capita (2018)]
+FROM dbo.production_based_co2_emissions$
+WHERE COUNTRY LIKE 'Arg%' -- find countries that start with the letter Arg 
+
+--i want to find out the max and min emissions btween 1990-2018
