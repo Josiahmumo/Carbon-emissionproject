@@ -107,4 +107,34 @@ SELECT  [Metric tons of CO2e per capita (2018)]
 FROM dbo.production_based_co2_emissions$
 WHERE COUNTRY LIKE 'Arg%' -- find countries that start with the letter Arg 
 
---i want to find out the max and min emissions btween 1990-2018
+-- next, I find the min and max value of Carbon Emissions per capital in America in 2018
+Select Max([Metric tons of CO2e per capita (2018)]) as MaxAmerica, min([Metric tons of CO2e per capita (2018)]) as MinAmerica
+FRom dbo.production_based_co2_emissions$
+WHERE Continent = 'America'
+--the maximum value is 21.14 while the minimum value is 0.89
+--next i want to find out which coountry in america recorded the highest emession per capita
+
+SELECT COUNTRY
+FROM DBO.production_based_co2_emissions$
+WHERE [Metric tons of CO2e per capita (2018)] IN (0.89,21.14)
+
+--Grenada had the lowest emission per capita while Haiti had the highest emission per capita
+
+--  I want to find out which 5 countries have the highest amount of carbon emissions per capita IN 2018. 
+
+SELECT TOP 5 COUNTRY, ([Metric tons of CO2e per capita (2018)]) AS TopEmitters
+FROM DBO.production_based_co2_emissions$
+ORDER BY TopEmitters DESC
+
+--The top five emitters are Brunei	38.75
+--Qatar	35.89
+--Bahrain	31.19
+--United Arab Emirates	27.33
+--Kuwait	27.31
+
+--since the C02 produced is reported in per capita ill join the production_based_CO2 
+--to the word population table to establish exact  amounts of co2 produced
+
+SELECT DBO.production_based_co2_emissions$.[Metric tons of CO2e per capita (1990)], DBO.production_based_co2_emissions$.[Metric tons of CO2e per capita (1995)], DBO.production_based_co2_emissions$.[Metric tons of CO2e per capita (2000)], DBO.production_based_co2_emissions$.[Metric tons of CO2e per capita (2005)], DBO.production_based_co2_emissions$.[Metric tons of CO2e per capita (2010)]
+FROM DBO.production_based_co2_emissions$
+INNER JOIN DBO.world_population$ on dbo.production_based_co2_emissions$.Country = dbo.world_population$.Country
